@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="content" method="upgrade">
+    <name>PLG_WTCONTACTWITHFIELDS</name>
+    <author>Sergey Tolkachyov</author>
+    <creationDate>07/02/2024</creationDate>
+    <copyright>Copyright (C) 2019-2023. All rights reserved.</copyright>
+    <license>GNU/GPL 3.0</license>
+    <authorEmail>info@web-tolk.ru</authorEmail>
+    <authorUrl>https://web-tolk.ru</authorUrl>
+    <version>1.0.0</version>
+    <description>PLG_WTCONTACTWITHFIELDS_DESC</description>
+    <namespace path="src">Joomla\Plugin\Content\Wtcontactwithfields</namespace>
+    <files>
+        <folder>language</folder>
+        <folder>services</folder>
+        <folder plugin="wtcontactwithfields">src</folder>
+        <folder>tmpl</folder>
+        <filename>wtcontactwithfields.xml</filename>
+    </files>
+    <languages folder="language" client="administrator">
+        <language tag="en-GB">en-GB/plg_content_wtcontactwithfields.sys.ini</language>
+        <language tag="ru-RU">ru-RU/plg_content_wtcontactwithfields.sys.ini</language>
+        <language tag="en-GB">en-GB/plg_content_wtcontactwithfields.ini</language>
+        <language tag="ru-RU">ru-RU/plg_content_wtcontactwithfields.ini</language>
+    </languages>
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field
+                        addfieldprefix="Joomla\Plugin\Content\Wtcontactwithfields\Fields"
+                        type="plugininfo"
+                        name="plugininfo"/>
+
+                <field type="radio"
+                       name="show_article_author_info"
+                       label="PLG_WTCONTACTWITHFIELDS_SHOW_ARTICLE_AUTHOR_INFO"
+                       default="0"
+                       class="btn-group btn-group-yesno"
+                       >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field type="radio"
+                       name="show_condition"
+                       label="PLG_WTCONTACTWITHFIELDS_CONDITION"
+                       default="only_in_specified"
+                       class="btn-group"
+                       showon="show_article_author_info:1"
+                       >
+                    <option value="everywhere_except_specified">PLG_WTCONTACTWITHFIELDS_CONDITION_EVERYWHERE_EXCEPT_SPECIFIED</option>
+                    <option value="only_in_specified">PLG_WTCONTACTWITHFIELDS_CONDITION_ONLY_IN_SPECIFIED</option>
+                </field>
+
+                <field type="category"
+                       name="categories"
+                       extension="com_content"
+                       label="PLG_WTCONTACTWITHFIELDS_CATEGORIES"
+                       multiple="true"
+                       layout="joomla.form.field.list-fancy-select"
+                       showon="show_article_author_info:1"/>
+                <field type="list"
+                       name="author_info_article_position"
+                       default="before_display_content"
+                       label="PLG_WTCONTACTWITHFIELDS_ARTICLE_POSITION"
+                       showon="show_article_author_info:1">
+                    <option value="before_display_content">PLG_WTCONTACTWITHFIELDS_POSITION_BEFORE_DISPLAY_CONTENT</option>
+                    <option value="after_display_title">PLG_WTCONTACTWITHFIELDS_POSITION_AFTER_DISPLAY_TITLE</option>
+                    <option value="after_display_content">PLG_WTCONTACTWITHFIELDS_POSITION_AFTER_DISPLAY_CONTENT</option>
+                </field>
+                <field type="list"
+                       name="author_info_category_position"
+                       default="before_display_content"
+                       label="PLG_WTCONTACTWITHFIELDS_CATEGORY_POSITION"
+                       showon="show_article_author_info:1">
+                    <option value="before_display_content">PLG_WTCONTACTWITHFIELDS_POSITION_BEFORE_DISPLAY_CONTENT</option>
+                    <option value="after_display_title">PLG_WTCONTACTWITHFIELDS_POSITION_AFTER_DISPLAY_TITLE</option>
+                    <option value="after_display_content">PLG_WTCONTACTWITHFIELDS_POSITION_AFTER_DISPLAY_CONTENT</option>
+                </field>
+                <field type="filelist"
+                       name="author_info_category_layout"
+                       label="PLG_WTCONTACTWITHFIELDS_AUTHOR_INFO_CATEGORY_LAYOUT"
+                       directory="plugins/content/wtcontactwithfields/tmpl"
+                       fileFilter="php"
+                       stripext="true"
+                       hide_default="true"
+                       showon="show_article_author_info:1"/>
+                <field type="filelist"
+                       name="author_info_article_layout"
+                       label="PLG_WTCONTACTWITHFIELDS_AUTHOR_INFO_ARTICLE_LAYOUT"
+                       directory="plugins/content/wtcontactwithfields/tmpl"
+                       fileFilter="php"
+                       stripext="true"
+                       hide_default="true"
+                       showon="show_article_author_info:1"/>
+            </fieldset>
+        </fields>
+    </config>
+</extension>

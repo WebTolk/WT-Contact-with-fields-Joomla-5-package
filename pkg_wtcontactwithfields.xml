@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<extension type="package" method="upgrade">
+	<name>PKG_WTCONTACTWITHFIELDS</name>
+	<author>Sergey Tolkachyov</author>
+	<creationDate>12/02/2024</creationDate>
+	<packagename>wtcontactwithfields</packagename>
+	<version>1.0.0</version>
+	<url>https://web-tolk.ru/</url>
+	<packager>Sergey Tolkachyov</packager>
+	<packagerurl>https://web-tolk.ru/</packagerurl>
+	<description>PKG_WTCONTACTWITHFIELDS_DESC</description>
+	<license>GNU GPL 3.0</license>
+	<scriptfile>pkg_script.php</scriptfile>
+	<languages>
+		<language tag="ru-RU">language/ru-RU/pkg_wtcontactwithfields.sys.ini</language>
+		<language tag="en-GB">language/en-GB/pkg_wtcontactwithfields.sys.ini</language>
+	</languages>
+	<files>
+	   <folder type="plugin" id="wtcontactwithfields" group="content" method="upgrade">plg_content_wtcontactwithfields</folder>
+	   <folder type="plugin" id="wtcontactwithfieldsbutton" group="editors-xtd" method="upgrade">plg_editors-xtd_wtcontactwithfieldsbutton</folder>
+	</files>
+	<updateservers>
+      <server type="extension" priority="1" name="WebTolk - WT Contact anywhere with fields updates">https://web-tolk.ru/component/swjprojects/jupdate?element=pkg_wtcontactwithfields</server>
+	</updateservers>
+	<changelogurl>https://web-tolk.ru/jchangelog?element=pkg_wtcontactwithfields</changelogurl>
+	<targetplatform name="joomla" version="5.*|6.*" />
+	<php_minimum>8.1.0</php_minimum>
+</extension>

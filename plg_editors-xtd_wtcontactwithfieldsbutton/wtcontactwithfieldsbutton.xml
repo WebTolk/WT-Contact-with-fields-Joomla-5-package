@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="editors-xtd" method="upgrade">
+	<name>Editors-xtd - WT Contact anywhere with fields</name>
+	<author>Sergey Tolkachyov</author>
+	<creationDate>08/02/2024</creationDate>
+	<copyright>Copyright (C) Sergey Tolkachyov. All rights reserved.</copyright>
+	<license>GNU General Public License version 3</license>
+	<authorEmail>info@web-tolk.ru</authorEmail>
+	<authorUrl>https://web-tolk.ru</authorUrl>
+	<version>1.0.0</version>
+	<description>PLG_WTCONTACTWITHFIELDSBUTTON_DESC</description>
+	<namespace path="src">Joomla\Plugin\EditorsXtd\Wtcontactwithfieldsbutton</namespace>
+	<media folder="media" destination="plg_editors-xtd_wtcontactwithfieldsbutton">
+		<folder>js</folder>
+	</media>
+	<languages folder="language" client="administrator">
+		<language tag="en-GB">en-GB/plg_editors-xtd_wtcontactwithfieldsbutton.sys.ini</language>
+		<language tag="ru-RU">ru-RU/plg_editors-xtd_wtcontactwithfieldsbutton.sys.ini</language>
+	</languages>
+	<files>
+		<folder plugin="wtcontactwithfieldsbutton">src</folder>
+		<folder>services</folder>
+		<folder>language</folder>
+		<filename>wtcontactwithfieldsbutton.xml</filename>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field addfieldprefix="Joomla\Plugin\EditorsXtd\Wtcontactwithfieldsbutton\Fields"
+					   type="plugininfo" name="plugininfo"/>
+			</fieldset>
+		</fields>
+	</config>
+</extension>
