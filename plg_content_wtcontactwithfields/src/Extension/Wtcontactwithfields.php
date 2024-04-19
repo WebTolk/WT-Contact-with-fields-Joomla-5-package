@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       WT Contacts anywhere with fields
- * @version       1.0.0
+ * @version       1.0.1
  * @Author        Sergey Tolkachyov, https://web-tolk.ru
  * @copyright     Copyright (C) 2024 Sergey Tolkachyov
  * @license       GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -17,15 +17,14 @@ use Joomla\CMS\Event\Content\AfterTitleEvent;
 use Joomla\CMS\Event\Content\BeforeDisplayEvent;
 use Joomla\CMS\Event\Content\ContentPrepareEvent;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Helper\TagsHelper;
-use Joomla\CMS\Language\Multilanguage;
+use Joomla\CMS\Log\Log;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\Component\Fields\Administrator\Helper\FieldsHelper;
 use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Database\ParameterType;
 use Joomla\Database\QueryInterface;
+use Joomla\Event\DispatcherInterface;
 use Joomla\Event\SubscriberInterface;
-use Joomla\Registry\Registry;
 
 
 final class Wtcontactwithfields extends CMSPlugin implements SubscriberInterface
@@ -39,6 +38,13 @@ final class Wtcontactwithfields extends CMSPlugin implements SubscriberInterface
 	 * @since  3.9.0
 	 */
 	protected $autoloadLanguage = true;
+
+	public function __construct(DispatcherInterface $dispatcher, array $config = [],)
+	{
+		parent::__construct($dispatcher, $config);
+		Log::addLogger(['text_file' => 'plg_content_wtcontactwithfields.php'], Log::ALL, ['plg_content_wtcontactwithfields']);
+	}
+
 
 	/**
 	 * Returns an array of events this subscriber will listen to.
@@ -89,7 +95,7 @@ final class Wtcontactwithfields extends CMSPlugin implements SubscriberInterface
 			return;
 		}
 
-		//Проверка есть ли строка замены в контенте
+		// Проверка есть ли строка замены в контенте
 		if (strpos($article->text, 'wt_contact_wf') === false)
 		{
 			return;
@@ -120,7 +126,10 @@ final class Wtcontactwithfields extends CMSPlugin implements SubscriberInterface
 
 				$contact = $this->getContactInfo((int) $short_code_params["contact_id"]);
 
-				$html = $this->renderContact($contact, $tmpl);
+				if (!empty($contact))
+				{
+					$html = $this->renderContact($contact, $tmpl);
+				}
 
 				$article->text      = str_replace($short_codes[0][$i], $html, $article->text);
 				if(property_exists($article,'introtext') && !empty($article->introtext))
@@ -138,6 +147,7 @@ final class Wtcontactwithfields extends CMSPlugin implements SubscriberInterface
 				return;
 			}
 			$i++;
+			$html = '';
 		}
 	}
 
@@ -303,8 +313,14 @@ final class Wtcontactwithfields extends CMSPlugin implements SubscriberInterface
 			->getMVCFactory()
 			->createModel('Contact', 'Site', ['ignore_request' => false]);
 
-		return $model->getItem((int) $contact_id);
+		try
+		{
+			return $model->getItem($contact_id);
+		} catch (\Exception $e) {
 
+			Log::add('WT Contact anywhere with fields: '.($e->getMessage()).'. Contact id '.$contact_id,Log::ERROR);
+			return null;
+		}
 	}
 
 	/**
