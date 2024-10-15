@@ -1,7 +1,8 @@
 <?php
+
 /**
  * @package       WT Contacts anywhere with fields
- * @version       1.0.1
+ * @version       1.0.2
  * @Author        Sergey Tolkachyov, https://web-tolk.ru
  * @copyright     Copyright (C) 2024 Sergey Tolkachyov
  * @license       GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -79,5 +80,7 @@ use Joomla\CMS\Language\Text;
 /** @var  $contact object Contact data */
 
 $contact_sef_link = Route::_(RouteHelper::getContactRoute($contact->slug, $contact->catid, $contact->language));
+
+$open_new_window = $this->params->get('open_new_window', 0) ? 'target="_blank"' : ''; // open new window params YES/NO
 ?>
-<a href="<?php echo $contact_sef_link; ?>"><?php echo $contact->name; ?></a>
+<a href="<?php echo $contact_sef_link; ?>" <?= $open_new_window; ?>><?php echo $contact->name; ?></a>

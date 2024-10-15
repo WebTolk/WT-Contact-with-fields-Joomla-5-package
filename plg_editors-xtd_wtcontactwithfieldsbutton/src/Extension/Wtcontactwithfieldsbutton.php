@@ -1,7 +1,8 @@
 <?php
+
 /**
  * @package       WT Contacts anywhere with fields
- * @version       1.0.1
+ * @version       1.0.2
  * @Author        Sergey Tolkachyov, https://web-tolk.ru
  * @copyright     Copyright (C) 2024 Sergey Tolkachyov
  * @license       GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -56,8 +57,7 @@ final class Wtcontactwithfieldsbutton extends CMSPlugin implements SubscriberInt
 		$subject  = $event->getButtonsRegistry();
 		$disabled = $event->getDisabledButtons();
 
-		if (\in_array($this->_name, $disabled))
-		{
+		if (\in_array($this->_name, $disabled)) {
 			return;
 		}
 
@@ -83,10 +83,9 @@ final class Wtcontactwithfieldsbutton extends CMSPlugin implements SubscriberInt
 			$user->authorise('core.create', 'com_contact')
 			|| $user->authorise('core.edit', 'com_contact')
 			|| $user->authorise('core.edit.own', 'com_contact')
-		)
-		{
+		) {
 
-    		// The URL for the contacts list
+			// The URL for the contacts list
 			$link = 'index.php?option=com_ajax&plugin=wtcontactwithfieldsbutton&group=editors-xtd&format=html&tmpl=component&' . Session::getFormToken() . '=1&editor=' . $name;
 
 			$button = new Button(
@@ -120,8 +119,7 @@ final class Wtcontactwithfieldsbutton extends CMSPlugin implements SubscriberInt
 	{
 		$app = $this->getApplication();
 
-		if ($app->isClient('site'))
-		{
+		if ($app->isClient('site')) {
 			Session::checkToken('get') or die(Text::_('JINVALID_TOKEN'));
 		}
 
@@ -129,23 +127,21 @@ final class Wtcontactwithfieldsbutton extends CMSPlugin implements SubscriberInt
 		$doc->getWebAssetManager()
 			->useScript('core')
 			->registerAndUseScript(
-				'wtcontactwithfieldsbutton', 'plg_editors-xtd_wtcontactwithfieldsbutton/wtcontactwithfieldsbutton.js'
+				'wtcontactwithfieldsbutton',
+				'plg_editors-xtd_wtcontactwithfieldsbutton/wtcontactwithfieldsbutton.js'
 			);
 
 		$editor                       = $app->getInput()->get('editor', '');
 		$wt_wtcontactwithfieldsbutton = Folder::files(JPATH_SITE . "/plugins/content/wtcontactwithfields/tmpl");
 		$layout_options               = array();
-		foreach ($wt_wtcontactwithfieldsbutton as $file)
-		{
-			if (File::getExt($file) == "php")
-			{
+		foreach ($wt_wtcontactwithfieldsbutton as $file) {
+			if (File::getExt($file) == "php") {
 				$wt_layout        = File::stripExt($file);
 				$layout_options[] = HTMLHelper::_('select.option', $wt_layout, $wt_layout);
 			}
 		}
 
-		if (!empty($editor))
-		{
+		if (!empty($editor)) {
 
 			$doc->addScriptOptions('xtd-wtcontactwithfieldsbutton', array('editor' => $editor));
 		}
@@ -172,7 +168,8 @@ final class Wtcontactwithfieldsbutton extends CMSPlugin implements SubscriberInt
 
 		// Поле категорий
 		$options        = HTMLHelper::_('category.options', 'com_contact', $config = ['filter.published' => [0, 1]]);
-		$category_filed = HTMLHelper::_('select.genericlist',
+		$category_filed = HTMLHelper::_(
+			'select.genericlist',
 			$options,
 			'category_id',
 			['class' => 'form-select', 'onchange' => 'Joomla.submitform();return false;'],
@@ -180,32 +177,33 @@ final class Wtcontactwithfieldsbutton extends CMSPlugin implements SubscriberInt
 			'text',
 			$filter_category_id,
 			'category_id',
-			true);
+			true
+		);
 
 		$contacts = $contacts_model->getItems();
 
-		?>
-        <form
-                action="index.php?option=com_ajax&plugin=wtcontactwithfieldsbutton&group=editors-xtd&format=html&tmpl=component&<?php echo Session::getFormToken(); ?>=1&editor=<?php echo $editor; ?>"
-                method="post"
-                name="adminForm"
-                id="adminForm"
-                class="container">
-            <input type="hidden" name="option" value="com_ajax"/>
-            <input type="hidden" name="plugin" value="wtcontactwithfieldsbutton"/>
-            <input type="hidden" name="group" value="editors-xtd"/>
-            <input type="hidden" name="format" value="html"/>
-            <input type="hidden" name="tmpl" value="component"/>
-            <input type="hidden" name="<?php echo Session::getFormToken(); ?>" value="1"/>
-            <input type="hidden" name="editor" value="<?php echo $editor; ?>"/>
+?>
+		<form
+			action="index.php?option=com_ajax&plugin=wtcontactwithfieldsbutton&group=editors-xtd&format=html&tmpl=component&<?php echo Session::getFormToken(); ?>=1&editor=<?php echo $editor; ?>"
+			method="post"
+			name="adminForm"
+			id="adminForm"
+			class="container">
+			<input type="hidden" name="option" value="com_ajax" />
+			<input type="hidden" name="plugin" value="wtcontactwithfieldsbutton" />
+			<input type="hidden" name="group" value="editors-xtd" />
+			<input type="hidden" name="format" value="html" />
+			<input type="hidden" name="tmpl" value="component" />
+			<input type="hidden" name="<?php echo Session::getFormToken(); ?>" value="1" />
+			<input type="hidden" name="editor" value="<?php echo $editor; ?>" />
 
-            <div class="container-fluid">
-                <div class="row mb-3 border-bottom">
-                    <div class="col-6 col-md-4 col-lg-3">
-                        <div class="input-group mb-3">
-                            <label for="wtcontactwithfieldsbutton_layout" class="input-group-text">
-                                <strong>tmpl</strong>
-                            </label>
+			<div class="container-fluid">
+				<div class="row mb-3 border-bottom">
+					<div class="col-6 col-md-4 col-lg-3">
+						<div class="input-group mb-3">
+							<label for="wtcontactwithfieldsbutton_layout" class="input-group-text">
+								<strong>tmpl</strong>
+							</label>
 							<?php
 							$attribs = [
 								'class'      => 'form-select',
@@ -215,79 +213,76 @@ final class Wtcontactwithfieldsbutton extends CMSPlugin implements SubscriberInt
 							echo HTMLHelper::_("select.genericlist", $layout_options, $name = "wtcontactwithfieldsbutton_layout", $attribs, $key = 'value', $text = 'text', $selected = "default");
 
 							?>
-                        </div>
+						</div>
 
-                    </div>
+					</div>
 
-                    <div class="col-2">
+					<div class="col-2">
 						<?php echo $contacts_model->getPagination()->getLimitBox(); ?>
-                    </div>
-                    <div class="col-3">
+					</div>
+					<div class="col-3">
 						<?php echo $category_filed; ?>
-                    </div>
-                    <div class="col-6 col-md-4">
-                        <div class="input-group mb-3">
-                            <input class="form-control" id="filter_search" type="text" name="filter[search]"
+					</div>
+					<div class="col-6 col-md-4">
+						<div class="input-group mb-3">
+							<input class="form-control" id="filter_search" type="text" name="filter[search]"
 								<?php
-								if (!empty($filter_search))
-								{
+								if (!empty($filter_search)) {
 									echo 'value="' . $filter_search . '"';
 								}
-								?>
-                            />
-                            <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
-                            <button class="btn btn-danger filter-search-actions__button js-stools-btn-clear"
-                                    type="button"
-                                    onclick="document.getElementById('filter_search').value='';Joomla.submitform();return false;">
-                                <i class="icon-remove"></i></button>
-                        </div>
-                    </div>
-                </div>
+								?> />
+							<button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
+							<button class="btn btn-danger filter-search-actions__button js-stools-btn-clear"
+								type="button"
+								onclick="document.getElementById('filter_search').value='';Joomla.submitform();return false;">
+								<i class="icon-remove"></i></button>
+						</div>
+					</div>
+				</div>
 
 
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+				<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
 					<?php foreach ($contacts as $contact): ?>
-                        <div class="col">
-                            <div class="card border">
-                                <div class="card-body">
-                                    <h5 class="card-title d-flex"><span><?php echo $contact->name; ?></span> <small class="text-muted ms-auto">#<?php echo $contact->id; ?></small></h5>
+						<div class="col">
+							<div class="card border">
+								<div class="card-body">
+									<h5 class="card-title d-flex"><span><?php echo $contact->name; ?></span> <small class="text-muted ms-auto">#<?php echo $contact->id; ?></small></h5>
 									<?php ?>
-                                    <a href="#" data-contact-id="<?php echo $contact->id; ?>"
-                                       class="stretched-link"><?php echo Text::_('JSELECT'); ?></a>
-                                </div>
-                            </div>
-                        </div>
+									<a href="#" data-contact-id="<?php echo $contact->id; ?>"
+										class="stretched-link"><?php echo Text::_('JSELECT'); ?></a>
+								</div>
+							</div>
+						</div>
 					<?php endforeach; ?>
-                </div>
-                <div class="">
+				</div>
+				<div class="">
 					<?php echo $contacts_model->getPagination()->getListFooter(); ?>
-                </div>
-            </div>
-        </form>
-        <div class="fixed-bottom bg-white shadow-sm border-top">
-            <div class="container d-flex justify-content-between align-items-end py-2">
-                <span class="">
-                        <a href="https://web-tolk.ru" target="_blank"
-                           style="display: inline-flex; align-items: center;">
-                                <svg width="85" height="18" xmlns="http://www.w3.org/2000/svg">
-                                     <g>
-                                      <title>Go to https://web-tolk.ru</title>
-                                      <text font-weight="bold" xml:space="preserve" text-anchor="start"
-                                            font-family="Helvetica, Arial, sans-serif" font-size="18" id="svg_3" y="18"
-                                            x="8.152073" stroke-opacity="null" stroke-width="0" stroke="#000"
-                                            fill="#0fa2e6">Web</text>
-                                      <text font-weight="bold" xml:space="preserve" text-anchor="start"
-                                            font-family="Helvetica, Arial, sans-serif" font-size="18" id="svg_4" y="18"
-                                            x="45" stroke-opacity="null" stroke-width="0" stroke="#000"
-                                            fill="#384148">Tolk</text>
-                                     </g>
-                                </svg>
-                        </a>
-                    </span>
-            </div>
-        </div>
-        </div>
-		<?php
+				</div>
+			</div>
+		</form>
+		<div class="fixed-bottom bg-white shadow-sm border-top">
+			<div class="container d-flex justify-content-between align-items-end py-2">
+				<span class="">
+					<a href="https://web-tolk.ru" target="_blank"
+						style="display: inline-flex; align-items: center;">
+						<svg width="85" height="18" xmlns="http://www.w3.org/2000/svg">
+							<g>
+								<title>Go to https://web-tolk.ru</title>
+								<text font-weight="bold" xml:space="preserve" text-anchor="start"
+									font-family="Helvetica, Arial, sans-serif" font-size="18" id="svg_3" y="18"
+									x="8.152073" stroke-opacity="null" stroke-width="0" stroke="#000"
+									fill="#0fa2e6">Web</text>
+								<text font-weight="bold" xml:space="preserve" text-anchor="start"
+									font-family="Helvetica, Arial, sans-serif" font-size="18" id="svg_4" y="18"
+									x="45" stroke-opacity="null" stroke-width="0" stroke="#000"
+									fill="#384148">Tolk</text>
+							</g>
+						</svg>
+					</a>
+				</span>
+			</div>
+		</div>
+		</div>
+<?php
 	}
-
 }

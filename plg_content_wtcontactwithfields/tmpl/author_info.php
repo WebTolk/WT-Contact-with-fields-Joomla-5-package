@@ -1,7 +1,8 @@
 <?php
+
 /**
  * @package       WT Contacts anywhere with fields
- * @version       1.0.1
+ * @version       1.0.2
  * @Author        Sergey Tolkachyov, https://web-tolk.ru
  * @copyright     Copyright (C) 2024 Sergey Tolkachyov
  * @license       GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -73,30 +74,29 @@ use Joomla\CMS\Language\Text;
 //$additional_images = (array)json_decode($contact->jcfields[1]->rawvalue);
 
 $contact_sef_link = Route::_(RouteHelper::getContactRoute($contact->slug, $contact->catid, $contact->language));
+
+$open_new_window = $this->params->get('open_new_window', 0) ? 'target="_blank"' : ''; // open new window params YES/NO
 ?>
 
 <div class="card mb-3 shadow-sm">
     <div class="row g-0">
         <div class="col-4 col-md-3 col-xl-2">
-			<?php
-            if(!empty($contact->image))
-            {
-	            $img_attribs = [
-		            'class' => 'img-fluid rounded-start'
-	            ];
-	            echo HTMLHelper::image($contact->image, $contact->name, $img_attribs);
+            <?php
+            if (!empty($contact->image)) {
+                $img_attribs = [
+                    'class' => 'img-fluid rounded-start'
+                ];
+                echo HTMLHelper::image($contact->image, $contact->name, $img_attribs);
             }
-			?>
+            ?>
         </div>
         <div class="col-8 col-md-9 col-xl-10">
             <div class="card-body">
                 <h5 class="card-title"><?php echo $contact->name; ?></h5>
-				<?php echo $contact->misc; ?>
-                <a href="<?php echo $contact_sef_link; ?>" target="_blank"
-                   class="card-link"><?php echo Text::_('JDETAILS'); ?></a>
+                <?php echo $contact->misc; ?>
+                <a href="<?php echo $contact_sef_link; ?>" <?= $open_new_window; ?>
+                    class="card-link"><?php echo Text::_('JDETAILS'); ?></a>
             </div>
         </div>
     </div>
 </div>
-
-

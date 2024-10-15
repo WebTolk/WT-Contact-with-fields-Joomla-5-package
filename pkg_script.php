@@ -1,7 +1,8 @@
 <?php
+
 /**
  * @package       WT Contact anywhere with fields package
- * @version       1.0.1
+ * @version       1.0.2
  * @Author        Sergey Tolkachyov, https://web-tolk.ru
  * @сopyright (c) April 2024 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -21,10 +22,10 @@ use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\CMS\Version;
 
-return new class () implements ServiceProviderInterface {
+return new class() implements ServiceProviderInterface {
 	public function register(Container $container)
 	{
-		$container->set(InstallerScriptInterface::class, new class ($container->get(AdministratorApplication::class)) implements InstallerScriptInterface {
+		$container->set(InstallerScriptInterface::class, new class($container->get(AdministratorApplication::class)) implements InstallerScriptInterface {
 
 			/**
 			 * The application object
@@ -86,7 +87,6 @@ return new class () implements ServiceProviderInterface {
 			{
 
 				return true;
-
 			}
 
 			/**
@@ -117,7 +117,6 @@ return new class () implements ServiceProviderInterface {
 			{
 
 				return true;
-
 			}
 
 			/**
@@ -134,15 +133,13 @@ return new class () implements ServiceProviderInterface {
 			{
 
 				$version = new Version();
-				if (!$version->isCompatible('5.0.0'))
-				{
+				if (!$version->isCompatible('5.0.0')) {
 					$this->app->enqueueMessage('&#128546; <strong>WT Contact everywhere with fields</strong> package doesn\'t support Joomla versions <span class="alert-link">lower 5</span>. Your Joomla version is <span class="badge bg-danger">' . $version->getShortVersion() . '</span>', 'error');
 
 					return false;
 				}
 
 				return true;
-
 			}
 
 
@@ -160,8 +157,7 @@ return new class () implements ServiceProviderInterface {
 			{
 
 				$smile = '';
-				if ($type != 'uninstall')
-				{
+				if ($type != 'uninstall') {
 					$smiles    = ['&#9786;', '&#128512;', '&#128521;', '&#128525;', '&#128526;', '&#128522;', '&#128591;'];
 					$smile_key = array_rand($smiles, 1);
 					$smile     = $smiles[$smile_key];
@@ -214,7 +210,6 @@ return new class () implements ServiceProviderInterface {
 				// Update record
 				$this->db->updateObject('#__extensions', $plugin, ['type', 'element', 'folder']);
 			}
-
 		});
 	}
 };
