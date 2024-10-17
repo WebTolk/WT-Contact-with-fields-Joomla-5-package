@@ -16,11 +16,11 @@
 		<language tag="en-GB">language/en-GB/pkg_wtcontactwithfields.sys.ini</language>
 	</languages>
 	<files>
-		<folder type="plugin" id="wtcontactwithfields" group="content" method="upgrade">plg_content_wtcontactwithfields</folder>
-		<folder type="plugin" id="wtcontactwithfieldsbutton" group="editors-xtd" method="upgrade">plg_editors-xtd_wtcontactwithfieldsbutton</folder>
+	   <folder type="plugin" id="wtcontactwithfields" group="content" method="upgrade">plg_content_wtcontactwithfields</folder>
+	   <folder type="plugin" id="wtcontactwithfieldsbutton" group="editors-xtd" method="upgrade">plg_editors-xtd_wtcontactwithfieldsbutton</folder>
 	</files>
 	<updateservers>
-		<server type="extension" priority="1" name="WebTolk - WT Contact anywhere with fields updates">https://web-tolk.ru/component/swjprojects/jupdate?element=pkg_wtcontactwithfields</server>
+      <server type="extension" priority="1" name="WebTolk - WT Contact anywhere with fields updates">https://web-tolk.ru/component/swjprojects/jupdate?element=pkg_wtcontactwithfields</server>
 	</updateservers>
 	<changelogurl>https://web-tolk.ru/jchangelog?element=pkg_wtcontactwithfields</changelogurl>
 	<targetplatform name="joomla" version="5.*|6.*" />

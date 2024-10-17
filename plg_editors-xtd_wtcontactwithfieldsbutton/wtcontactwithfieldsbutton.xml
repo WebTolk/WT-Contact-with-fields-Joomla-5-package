@@ -26,7 +26,8 @@
 	<config>
 		<fields name="params">
 			<fieldset name="basic">
-				<field addfieldprefix="Joomla\Plugin\EditorsXtd\Wtcontactwithfieldsbutton\Fields" type="plugininfo" name="plugininfo"/>
+				<field addfieldprefix="Joomla\Plugin\EditorsXtd\Wtcontactwithfieldsbutton\Fields"
+					   type="plugininfo" name="plugininfo"/>
 			</fieldset>
 		</fields>
 	</config>

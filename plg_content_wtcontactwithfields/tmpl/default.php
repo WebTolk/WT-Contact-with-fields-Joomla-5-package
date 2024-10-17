@@ -72,10 +72,8 @@ use Joomla\CMS\Language\Text;
 /** @var  $contact object Contact data */
 
 $contact_sef_link = Route::_(RouteHelper::getContactRoute($contact->slug, $contact->catid, $contact->language));
-
-$open_new_window = $this->params->get('open_new_window', 0) ? 'target="_blank"' : ''; // open new window params YES/NO
 ?>
 <div class="d-flex flex-column">
     <?php echo $contact->name; ?>
-    <a href="<?php echo $contact_sef_link; ?>" <?= $open_new_window; ?> class="card-link"><?php echo Text::_('JDETAILS'); ?></a>
+    <a href="<?php echo $contact_sef_link; ?>" class="card-link"><?php echo Text::_('JDETAILS'); ?></a>
 </div>

@@ -74,8 +74,6 @@ use Joomla\CMS\Language\Text;
 //$additional_images = (array)json_decode($contact->jcfields[1]->rawvalue);
 
 $contact_sef_link = Route::_(RouteHelper::getContactRoute($contact->slug, $contact->catid, $contact->language));
-
-$open_new_window = $this->params->get('open_new_window', 0) ? 'target="_blank"' : ''; // open new window params YES/NO
 ?>
 
 <div class="card mb-3 shadow-sm">
@@ -94,8 +92,7 @@ $open_new_window = $this->params->get('open_new_window', 0) ? 'target="_blank"' 
             <div class="card-body">
                 <h5 class="card-title"><?php echo $contact->name; ?></h5>
                 <?php echo $contact->misc; ?>
-                <a href="<?php echo $contact_sef_link; ?>" <?= $open_new_window; ?>
-                    class="card-link"><?php echo Text::_('JDETAILS'); ?></a>
+                <a href="<?php echo $contact_sef_link; ?>" class="card-link"><?php echo Text::_('JDETAILS'); ?></a>
             </div>
         </div>
     </div>
