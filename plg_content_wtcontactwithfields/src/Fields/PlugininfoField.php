@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @package       WT Contacts anywhere with fields
+ * @package    WT Contact anywhere with fields package
  * @version       1.0.2
  * @Author        Sergey Tolkachyov, https://web-tolk.ru
  * @copyright     Copyright (C) 2024 Sergey Tolkachyov

@@ -2,8 +2,8 @@
 <extension type="plugin" group="editors-xtd" method="upgrade">
 	<name>Editors-xtd - WT Contact anywhere with fields</name>
 	<author>Sergey Tolkachyov</author>
-	<creationDate>April 2024</creationDate>
-	<copyright>Copyright (C) Sergey Tolkachyov. All rights reserved.</copyright>
+	<creationDate>22.10.2024</creationDate>
+	<copyright>Copyright (c) 2024 Sergey Tolkachyov. All rights reserved.</copyright>
 	<license>GNU General Public License version 3</license>
 	<authorEmail>info@web-tolk.ru</authorEmail>
 	<authorUrl>https://web-tolk.ru</authorUrl>
