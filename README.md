@@ -1,6 +1,6 @@
 # WT Contact with fields plugin for Joomla
 Insert Joomla contacts anywhere. Use `{wt_contact_wf contact_id=XXXX tmpl=XXXX}` where you need to insert a contact with your own layout. Create your own layouts in plugin's tmpl folder. It also shows a block of information about the author in Joomla articles.
-![](https://web-tolk.ru/images/swjprojects/projects/83/en-GB/cover.webp)
+![image](https://github.com/user-attachments/assets/4ec05fe0-a112-4583-a017-07c2de59a1a4)
 # Description
 This plugin is needed to output information from the com_contact Joomla contacts component. For example, you have created a catalog of online courses on one of the e-commerce components or Joomla materials and you need to display information about the course teacher - You can use this plugin. The plugin allows you to display contact data with all standard fields, as well as data from user fields. To do this, create your own output layout in the tmpl folder of the plugin and specify it in the shortcode parameter.
 The package consists of two plugins:
