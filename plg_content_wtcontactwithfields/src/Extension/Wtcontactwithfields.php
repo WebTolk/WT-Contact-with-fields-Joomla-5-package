@@ -1,7 +1,8 @@
 <?php
+
 /**
  * @package       WT Contacts anywhere with fields
- * @version       1.0.1
+ * @version       1.0.2
  * @Author        Sergey Tolkachyov, https://web-tolk.ru
  * @copyright     Copyright (C) 2024 Sergey Tolkachyov
  * @license       GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -81,8 +82,7 @@ final class Wtcontactwithfields extends CMSPlugin implements SubscriberInterface
 
 		// Don't run if in the API Application
 		// Don't run this plugin when the content is being indexed
-		if (!$this->getApplication()->isClient('site') || $event->getContext() === 'com_finder.indexer')
-		{
+		if (!$this->getApplication()->isClient('site') || $event->getContext() === 'com_finder.indexer') {
 			return;
 		}
 
@@ -90,14 +90,12 @@ final class Wtcontactwithfields extends CMSPlugin implements SubscriberInterface
 		$article    = $event->getItem();
 
 		// If the item does not have a text property there is nothing to do
-		if (!property_exists($article, 'text'))
-		{
+		if (!property_exists($article, 'text')) {
 			return;
 		}
 
 		// Проверка есть ли строка замены в контенте
-		if (strpos($article->text, 'wt_contact_wf') === false)
-		{
+		if (strpos($article->text, 'wt_contact_wf') === false) {
 			return;
 		}
 
@@ -108,42 +106,32 @@ final class Wtcontactwithfields extends CMSPlugin implements SubscriberInterface
 		$i                 = 0;
 		$short_code_params = [];
 
-		foreach ($short_codes[1] as $short_code)
-		{
+		foreach ($short_codes[1] as $short_code) {
 
 			$settings = explode(" ", $short_code);
 
-			foreach ($settings as $param)
-			{
+			foreach ($settings as $param) {
 				$param                        = explode("=", $param);
 				$short_code_params[$param[0]] = $param[1];
-
 			}
-			if (!empty($short_code_params["contact_id"]))
-			{
+			if (!empty($short_code_params["contact_id"])) {
 
 				$tmpl = (!empty($short_code_params["tmpl"]) ? $short_code_params["tmpl"] : 'default');
 
 				$contact = $this->getContactInfo((int) $short_code_params["contact_id"]);
 
-				if (!empty($contact))
-				{
+				if (!empty($contact)) {
 					$html = $this->renderContact($contact, $tmpl);
 				}
 
 				$article->text      = str_replace($short_codes[0][$i], $html, $article->text);
-				if(property_exists($article,'introtext') && !empty($article->introtext))
-				{
+				if (property_exists($article, 'introtext') && !empty($article->introtext)) {
 					$article->introtext = str_replace($short_codes[0][$i], $html, $article->introtext);
 				}
-				if(property_exists($article,'fulltext') && !empty($article->fulltext))
-				{
+				if (property_exists($article, 'fulltext') && !empty($article->fulltext)) {
 					$article->fulltext = str_replace($short_codes[0][$i], $html, $article->fulltext);
 				}
-
-			}
-			else
-			{
+			} else {
 				return;
 			}
 			$i++;
@@ -160,25 +148,21 @@ final class Wtcontactwithfields extends CMSPlugin implements SubscriberInterface
 	 *
 	 * @since   3.7.0
 	 */
-	public function onContentAfterTitle(AfterTitleEvent $event):void
+	public function onContentAfterTitle(AfterTitleEvent $event): void
 	{
-		if (!$this->params->get('show_article_author_info', 0))
-		{
+		if (!$this->params->get('show_article_author_info', 0)) {
 			return;
 		}
 
 		$view = $this->getApplication()->getInput()->getString('view');
 
-		if ($view === 'article' && $this->params->get('author_info_article_position', 'before_display_content') == 'after_display_title')
-		{
+		if ($view === 'article' && $this->params->get('author_info_article_position', 'before_display_content') == 'after_display_title') {
 			$event->addResult($this->showAuthorInfo($event->getContext(), $event->getItem(), $event->getParams(), $event->getPage(), $this->params->get('author_info_article_layout', '-1')));
 		}
 
-		if (($view === 'category' || $view === 'featured') && $this->params->get('author_info_category_position', 'before_display_content') == 'after_display_title')
-		{
+		if (($view === 'category' || $view === 'featured') && $this->params->get('author_info_category_position', 'before_display_content') == 'after_display_title') {
 			$event->addResult($this->showAuthorInfo($event->getContext(), $event->getItem(), $event->getParams(), $event->getPage(), $this->params->get('author_info_category_layout', '-1')));
 		}
-
 	}
 
 	/**
@@ -190,22 +174,19 @@ final class Wtcontactwithfields extends CMSPlugin implements SubscriberInterface
 	 *
 	 * @since   3.7.0
 	 */
-	public function onContentBeforeDisplay(BeforeDisplayEvent $event):void
+	public function onContentBeforeDisplay(BeforeDisplayEvent $event): void
 	{
-		if (!$this->params->get('show_article_author_info', 0))
-		{
+		if (!$this->params->get('show_article_author_info', 0)) {
 			return;
 		}
 
 		$view = $this->getApplication()->getInput()->getString('view');
 
-		if ($view === 'article' && $this->params->get('author_info_article_position', 'before_display_content') == 'before_display_content')
-		{
+		if ($view === 'article' && $this->params->get('author_info_article_position', 'before_display_content') == 'before_display_content') {
 			$event->addResult($this->showAuthorInfo($event->getContext(), $event->getItem(), $event->getParams(), $event->getPage(), $this->params->get('author_info_article_layout', '-1')));
 		}
 
-		if (($view === 'category' || $view === 'featured') && $this->params->get('author_info_category_position', 'before_display_content') == 'before_display_content')
-		{
+		if (($view === 'category' || $view === 'featured') && $this->params->get('author_info_category_position', 'before_display_content') == 'before_display_content') {
 			$event->addResult($this->showAuthorInfo($event->getContext(), $event->getItem(), $event->getParams(), $event->getPage(), $this->params->get('author_info_category_layout', '-1')));
 		}
 	}
@@ -219,22 +200,19 @@ final class Wtcontactwithfields extends CMSPlugin implements SubscriberInterface
 	 *
 	 * @since   3.7.0
 	 */
-	public function onContentAfterDisplay(AfterDisplayEvent $event):void
+	public function onContentAfterDisplay(AfterDisplayEvent $event): void
 	{
-		if (!$this->params->get('show_article_author_info', 0))
-		{
+		if (!$this->params->get('show_article_author_info', 0)) {
 			return;
 		}
 
 		$view = $this->getApplication()->getInput()->getString('view');
 
-		if ($view === 'article' && $this->params->get('author_info_article_position', 'before_display_content') == 'after_display_content')
-		{
+		if ($view === 'article' && $this->params->get('author_info_article_position', 'before_display_content') == 'after_display_content') {
 			$event->addResult($this->showAuthorInfo($event->getContext(), $event->getItem(), $event->getParams(), $event->getPage(), $this->params->get('author_info_article_layout', '-1')));
 		}
 
-		if (($view === 'category' || $view === 'featured') && $this->params->get('author_info_category_position', 'before_display_content') == 'after_display_content')
-		{
+		if (($view === 'category' || $view === 'featured') && $this->params->get('author_info_category_position', 'before_display_content') == 'after_display_content') {
 			$event->addResult($this->showAuthorInfo($event->getContext(), $event->getItem(), $event->getParams(), $event->getPage(), $this->params->get('author_info_category_layout', '-1')));
 		}
 	}
@@ -261,30 +239,25 @@ final class Wtcontactwithfields extends CMSPlugin implements SubscriberInterface
 			return '';
 		}
 
-		$categories = $this->params->get('categories',[]);
-		$condition_mode = $this->params->get('show_condition','only_in_specified');
+		$categories = $this->params->get('categories', []);
+		$condition_mode = $this->params->get('show_condition', 'only_in_specified');
 
 		$show_condition = false;
 
-		if($condition_mode == 'only_in_specified' && in_array($row->catid, $categories))
-		{
+		if ($condition_mode == 'only_in_specified' && in_array($row->catid, $categories)) {
 			$show_condition = true;
-		}
-		elseif($condition_mode == 'everywhere_except_specified' && !in_array($row->catid, $categories))
-		{
+		} elseif ($condition_mode == 'everywhere_except_specified' && !in_array($row->catid, $categories)) {
 			$show_condition = true;
 		}
 
 		$html = '';
-		if ($tmpl == '-1' || $show_condition == false)
-		{
+		if ($tmpl == '-1' || $show_condition == false) {
 			return $html;
 		}
 
 		$contact = $this->getContactIdByUserId((int) $row->created_by);
 
-		if (!empty($contact))
-		{
+		if (!empty($contact)) {
 			$html = $this->renderContact($contact, $tmpl);
 		}
 
@@ -303,8 +276,7 @@ final class Wtcontactwithfields extends CMSPlugin implements SubscriberInterface
 	 */
 	private function getContactInfo(int $contact_id): mixed
 	{
-		if (empty($contact_id))
-		{
+		if (empty($contact_id)) {
 			return false;
 		}
 
@@ -313,12 +285,11 @@ final class Wtcontactwithfields extends CMSPlugin implements SubscriberInterface
 			->getMVCFactory()
 			->createModel('Contact', 'Site', ['ignore_request' => false]);
 
-		try
-		{
+		try {
 			return $model->getItem($contact_id);
 		} catch (\Exception $e) {
 
-			Log::add('WT Contact anywhere with fields: '.($e->getMessage()).'. Contact id '.$contact_id,Log::ERROR);
+			Log::add('WT Contact anywhere with fields: ' . ($e->getMessage()) . '. Contact id ' . $contact_id, Log::ERROR);
 			return null;
 		}
 	}
@@ -354,7 +325,8 @@ final class Wtcontactwithfields extends CMSPlugin implements SubscriberInterface
 					$db->quoteName('parent.path', 'parent_route'),
 					$db->quoteName('parent.alias', 'parent_alias'),
 
-				])
+				]
+			)
 			->select($this->getSlugColumn($query, 'a.id', 'a.alias') . ' AS slug')
 			->select($this->getSlugColumn($query, 'c.id', 'c.alias') . ' AS catslug')
 			->leftJoin($db->quoteName('#__categories', 'parent'), 'parent.id = c.parent_id')
@@ -373,13 +345,11 @@ final class Wtcontactwithfields extends CMSPlugin implements SubscriberInterface
 		$db->setQuery($query);
 		$data = $db->loadObject();
 
-		if (empty($data))
-		{
+		if (empty($data)) {
 			return false;
 		}
 
 		return $data;
-
 	}
 
 	/**
@@ -417,20 +387,15 @@ final class Wtcontactwithfields extends CMSPlugin implements SubscriberInterface
 	private function renderContact(object $contact, $tmpl = 'default'): string
 	{
 		$html = '';
-		if (!empty($contact))
-		{
+		if (!empty($contact)) {
 			$contact->jcfields = FieldsHelper::getFields("com_contact.contact", $contact, true);
 			ob_start();
-			if (file_exists(JPATH_SITE . '/plugins/content/wtcontactwithfields/tmpl/' . $tmpl . '.php'))
-			{
+			if (file_exists(JPATH_SITE . '/plugins/content/wtcontactwithfields/tmpl/' . $tmpl . '.php')) {
 				require JPATH_SITE . '/plugins/content/wtcontactwithfields/tmpl/' . $tmpl . '.php';
-			}
-			else
-			{
+			} else {
 				require JPATH_SITE . '/plugins/content/wtcontactwithfields/tmpl/default.php';
 			}
 			$html = ob_get_clean();
-
 		}
 
 		return $html;

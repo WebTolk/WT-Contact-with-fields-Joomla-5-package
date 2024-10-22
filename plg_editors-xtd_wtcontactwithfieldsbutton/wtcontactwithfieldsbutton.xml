@@ -7,7 +7,7 @@
 	<license>GNU General Public License version 3</license>
 	<authorEmail>info@web-tolk.ru</authorEmail>
 	<authorUrl>https://web-tolk.ru</authorUrl>
-	<version>1.0.1</version>
+	<version>1.0.2</version>
 	<description>PLG_WTCONTACTWITHFIELDSBUTTON_DESC</description>
 	<namespace path="src">Joomla\Plugin\EditorsXtd\Wtcontactwithfieldsbutton</namespace>
 	<media folder="media" destination="plg_editors-xtd_wtcontactwithfieldsbutton">

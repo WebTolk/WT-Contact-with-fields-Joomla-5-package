@@ -1,7 +1,8 @@
 <?php
+
 /**
  * @package       WT Contacts anywhere with fields
- * @version       1.0.1
+ * @version       1.0.2
  * @Author        Sergey Tolkachyov, https://web-tolk.ru
  * @copyright     Copyright (C) 2024 Sergey Tolkachyov
  * @license       GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -73,6 +74,6 @@ use Joomla\CMS\Language\Text;
 $contact_sef_link = Route::_(RouteHelper::getContactRoute($contact->slug, $contact->catid, $contact->language));
 ?>
 <div class="d-flex flex-column">
-<?php echo $contact->name;?>
-<a href="<?php echo $contact_sef_link; ?>" target="_blank" class="card-link"><?php echo Text::_('JDETAILS'); ?></a>
+    <?php echo $contact->name; ?>
+    <a href="<?php echo $contact_sef_link; ?>" class="card-link"><?php echo Text::_('JDETAILS'); ?></a>
 </div>
