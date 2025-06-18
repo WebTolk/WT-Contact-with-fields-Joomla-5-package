@@ -3,7 +3,7 @@
  * @copyright   Copyright (C) 2024 Sergey Tolkachyov. All rights reserved.
  * @author     Sergey Tolkachyov
  * @link       https://web-tolk.ru
- * @version 	1.0.2
+ * @version 	1.1.0
  * @license     GNU General Public License version 3 or later
  */
 ;(() => {

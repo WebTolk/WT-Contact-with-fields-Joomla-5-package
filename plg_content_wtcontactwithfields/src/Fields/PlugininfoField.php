@@ -2,7 +2,7 @@
 
 /**
  * @package    WT Contact anywhere with fields package
- * @version       1.0.2
+ * @version       1.1.0
  * @Author        Sergey Tolkachyov, https://web-tolk.ru
  * @copyright     Copyright (C) 2024 Sergey Tolkachyov
  * @license       GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html

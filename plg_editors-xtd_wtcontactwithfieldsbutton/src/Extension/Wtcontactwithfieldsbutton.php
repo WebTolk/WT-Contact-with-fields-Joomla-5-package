@@ -2,7 +2,7 @@
 
 /**
  * @package    WT Contact anywhere with fields package
- * @version       1.0.2
+ * @version       1.1.0
  * @Author        Sergey Tolkachyov, https://web-tolk.ru
  * @copyright     Copyright (C) 2024 Sergey Tolkachyov
  * @license       GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -15,13 +15,14 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Editor\Button\Button;
 use Joomla\CMS\Event\Editor\EditorButtonsSetupEvent;
-use Joomla\CMS\Filesystem\File;
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\Event\SubscriberInterface;
+use Joomla\Uri\Uri;
 
 /**
  * Editor Article button
@@ -86,15 +87,24 @@ final class Wtcontactwithfieldsbutton extends CMSPlugin implements SubscriberInt
 		) {
 
 			// The URL for the contacts list
-			$link = 'index.php?option=com_ajax&plugin=wtcontactwithfieldsbutton&group=editors-xtd&format=html&tmpl=component&' . Session::getFormToken() . '=1&editor=' . $name;
-
+//			$link = 'index.php?option=com_ajax&plugin=wtcontactwithfieldsbutton&group=editors-xtd&format=html&tmpl=component&' . Session::getFormToken() . '=1&editor=' . $name;
+            $link = new Uri('index.php');
+			$link->setQuery([
+				'option'                => 'com_ajax',
+				'plugin'                => 'wtcontactwithfieldsbutton',
+				'group'                 => 'editors-xtd',
+				'format'                => 'html',
+				'tmpl'                  => 'component',
+				Session::getFormToken() => '1',
+				'editor'                => $name,
+			]);
 			$button = new Button(
 				$this->_name,
 				[
 					'action'  => 'modal',
-					'text'    => 'WT ' . (Text::_('PLG_EDITORS-XTD_CONTACT_BUTTON_CONTACT')),
+					'text'    => Text::_('PLG_WTCONTACTWITHFIELDSBUTTON_BTN_NAME'),
 					'icon'    => 'address',
-					'link'    => $link,
+					'link'    => $link->toString(),
 					'iconSVG' => '<svg viewBox="0 0 448 512" width="24" height="24"><path d="M436 160c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20V48c'
 						. '0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h320c26.5 0 48-21.5 48-48v-48h20c6.6 0 12-5.4 1'
 						. '2-12v-40c0-6.6-5.4-12-12-12h-20v-64h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20zm-228-32c35.3 0 64 28.7'

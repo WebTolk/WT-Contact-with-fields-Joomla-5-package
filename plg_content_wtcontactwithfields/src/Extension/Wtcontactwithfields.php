@@ -2,7 +2,7 @@
 
 /**
  * @package    WT Contact anywhere with fields package
- * @version       1.0.2
+ * @version       1.1.0
  * @Author        Sergey Tolkachyov, https://web-tolk.ru
  * @copyright     Copyright (C) 2024 Sergey Tolkachyov
  * @license       GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -26,8 +26,6 @@ use Joomla\Database\ParameterType;
 use Joomla\Database\QueryInterface;
 use Joomla\Event\DispatcherInterface;
 use Joomla\Event\SubscriberInterface;
-
-
 final class Wtcontactwithfields extends CMSPlugin implements SubscriberInterface
 {
 	use DatabaseAwareTrait;
@@ -88,6 +86,11 @@ final class Wtcontactwithfields extends CMSPlugin implements SubscriberInterface
 
 		// Get content item
 		$article    = $event->getItem();
+
+		if($this->params->get('available_in_code',false)) {
+			$article->wtcontactwf = $this->getContactIdByUserId((int)$article->created_by);
+		}
+
 
 		// If the item does not have a text property there is nothing to do
 		if (!property_exists($article, 'text')) {
