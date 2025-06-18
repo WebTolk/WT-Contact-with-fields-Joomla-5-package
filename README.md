@@ -23,3 +23,27 @@ This plugin also solves this problem.
 Parameters
 - **contact_id** - contact id in the contacts component. Required parameter
 - **tmpl** - The name of the output layout file in the `plugins/content/wtcontactwithfields/tmpl/` directory. Optional parameter.
+
+# For Joomla developers
+For developers, the ability has been added to put the contact data associated with the author of the article in the `wtcontactwf` property.
+```php
+ use Joomla\CMS\Event\AbstractEvent;
+ use Joomla\CMS\Factory;
+ 
+ $app = Factory::getApplication();
+ $article = $app->bootComponent('com_content')
+ 		   ->getMVCFactory()
+ 		   ->createModel('Article','Site')
+ 		   ->getItem($app->getInput()->get('id'));
+ $contentEventArguments = [
+ 						 'context' => 'com_content.article',
+ 						 'subject' => $article,
+ 						 'params'  => $article->params,
+ 						 'page'    => 0,
+ ];
+ 
+ $event = AbstractEvent::create('onContentPrepare', $contentEventArguments);
+ $app->getDispatcher()->dispatch($event->getName(), $event)->getArgument('result', []);
+ // Contact author data will be placed here 
+ dump($article->wtcontactwf);
+```
