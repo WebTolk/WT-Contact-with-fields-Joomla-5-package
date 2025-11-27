@@ -2,9 +2,9 @@
 <extension type="package" method="upgrade">
 	<name>PKG_WTCONTACTWITHFIELDS</name>
 	<author>Sergey Tolkachyov</author>
-	<creationDate>18.06.2025</creationDate>
+	<creationDate>27.11.2025</creationDate>
 	<packagename>wtcontactwithfields</packagename>
-	<version>1.1.0</version>
+	<version>1.1.1</version>
 	<url>https://web-tolk.ru/</url>
 	<packager>Sergey Tolkachyov</packager>
 	<packagerurl>https://web-tolk.ru/</packagerurl>

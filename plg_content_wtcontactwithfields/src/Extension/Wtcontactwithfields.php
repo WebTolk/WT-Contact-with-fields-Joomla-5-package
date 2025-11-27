@@ -2,7 +2,7 @@
 
 /**
  * @package    WT Contact anywhere with fields package
- * @version       1.1.0
+ * @version       1.1.1
  * @Author        Sergey Tolkachyov, https://web-tolk.ru
  * @copyright     Copyright (C) 2024 Sergey Tolkachyov
  * @license       GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -371,9 +371,9 @@ final class Wtcontactwithfields extends CMSPlugin implements SubscriberInterface
 		return 'CASE WHEN '
 			. $query->charLength($alias, '!=', '0')
 			. ' THEN '
-			. $query->concatenate([$query->castAsChar($id), $alias], ':')
+			. $query->concatenate([$query->castAs('CHAR', $id), $alias], ':')
 			. ' ELSE '
-			. $query->castAsChar($id) . ' END';
+			. $query->castAs('CHAR', $id) . ' END';
 	}
 
 	/**
